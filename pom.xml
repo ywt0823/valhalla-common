@@ -37,4 +37,17 @@
         <url>http://repo.dev.zichan360.com/nexus/content/repositories/bigdata/</url>
     </snapshotRepository>
     </distributionManagement>
+    <!-- 指定仓库-->
+    <repositories>
+        <repository>
+            <id>aliyun-repository</id>
+            <name>aliyun repository</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>bigdata-repository</id>
+            <name>bigdata repository</name>
+            <url>http://repo.dev.zichan360.com/nexus/content/repositories/bigdata/</url>
+        </repository>
+    </repositories>
 </project>
