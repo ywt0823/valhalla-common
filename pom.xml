@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>data-service-portal-parent</artifactId>
+        <groupId>com.zichan360.bigdata</groupId>
+        <version>1.0</version>
+    </parent>
+    <groupId>com.zichan360.bigdata</groupId>
+    <artifactId>data-service-portal-common</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!-- 发布选项: id必须与setting.xml文件中server的id相同 -->
+    <distributionManagement>
+    <repository>
+        <id>nexus-releases</id>
+        <name>Nexus Release Repository</name>
+        <url>http://repo.dev.zichan360.com/nexus/content/repositories/bigdata/</url>
+    </repository>
+    <snapshotRepository>
+        <id>nexus-snapshots</id>
+        <name>Nexus Snapshot Repository</name>
+        <url>http://repo.dev.zichan360.com/nexus/content/repositories/bigdata/</url>
+    </snapshotRepository>
+    </distributionManagement>
+</project>

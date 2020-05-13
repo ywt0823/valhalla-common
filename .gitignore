@@ -1,0 +1,34 @@
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*/*/buildinfo.properties
+
+.gradle/
+gralle/
+work/
+out/
+
+*/*/.DS_Store
+
+/target
+/project/project
+/project/target
+
+
+.mvn/
+/*/.mvn/
+
+
+
+### VS Code ###
+.vscode/
