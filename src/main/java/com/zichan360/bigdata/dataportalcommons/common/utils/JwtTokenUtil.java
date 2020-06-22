@@ -116,16 +116,21 @@ public class JwtTokenUtil {
      * @return
      */
     public static Integer checkToken(String jwtToken) {
-        Map<String, Object> claims = JwtTokenUtil.parseToken(jwtToken);
-        if (claims.isEmpty()){
+        try {
+            Map<String, Object> claims = JwtTokenUtil.parseToken(jwtToken);
+            if (claims.isEmpty()){
+                return 401;
+            }
+            Long expiration = new Long((Integer) claims.get("exp"));
+            Long currentTime = System.currentTimeMillis();
+            if (currentTime > expiration) {
+                return 200;
+            } else {
+                return 403;
+            }
+        }catch (Exception e){
+            CommonUtil.wrapperErrorLog(e);
             return 401;
-        }
-        Long expiration = new Long((Integer) claims.get("exp"));
-        Long currentTime = System.currentTimeMillis();
-        if (currentTime > expiration) {
-            return 200;
-        } else {
-            return 403;
         }
     }
 
