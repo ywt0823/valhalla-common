@@ -1,7 +1,5 @@
 package com.zichan360.bigdata.dataportalcommons.common.result;
 
-import java.util.Optional;
-
 /**
  * @author ywt
  * @date 2020年2月9日 08:58:39
@@ -50,7 +48,8 @@ public class ResultUtil {
     public static Result error(ResultEnum status, String msg) {
         Result result = new Result();
         result.setStatus(status);
-        result.setStatus_code(1000); //1000,程序默认错误
+        //1000,程序默认错误
+        result.setStatus_code(1000);
         result.setMsg(msg);
         result.setData(null);
         ResultPageInfo resultPageInfo = new ResultPageInfo("0", "0", "0");
@@ -67,41 +66,4 @@ public class ResultUtil {
         result.setPageInfo(resultPageInfo);
         return result;
     }
-
-    public static Integer formatCurrentPage(String currentPage) {
-        //当前页不能小于0
-        Integer rs;
-        try {
-            rs = Optional.ofNullable(currentPage)
-                    .map(page -> {
-                        int cp = Integer.parseInt(page);
-                        return Math.max(cp, 0);
-                    }).orElse(0);
-        } catch (Exception e) {
-            return 0;
-        }
-        return rs;
-    }
-
-    public static Integer formatPageSize(String pageSize) {
-        //页面行数最大为50,最小行数为10
-        Integer rs;
-        try {
-            rs = Optional.ofNullable(pageSize)
-                    .map(size -> {
-                        int pSize = Integer.parseInt(size);
-                        if (pSize > PAGESIZE_MAX) //50
-                        {
-                            return PAGESIZE_MAX;
-                        } else if (pSize < 0) {
-                            return PAGESIZE_DEFAULT; //10
-                        }
-                        return pSize;
-                    }).orElse(PAGESIZE_DEFAULT);
-        } catch (Exception e) {
-            return PAGESIZE_DEFAULT;
-        }
-        return rs;
-    }
-
 }

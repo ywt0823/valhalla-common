@@ -4,11 +4,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class JwtTokenUtil {
     private static final String reEncryptionKey = "3nTBnYv3xqhihQwI_W5H9hIwSfGHsvqs";
     private static final char[] jksKeyPass = "LQjbl3_Csc52PDUWdmfa6KxwARonhJ7N".toCharArray();
     private static final char[] jksStorePass = "Jo_rUjYwW40Gb6uAFi7s1ZzalhEcRyKm".toCharArray();
-    private static final String alias  = "jwt";
+    private static final String alias = "jwt";
 
     /**
      * 寻找证书文件
@@ -44,20 +44,22 @@ public class JwtTokenUtil {
     }
 
     public static String generateToken(Map<String, Object> claims, Long expirationSeconds) {
-         String originToken = Jwts.builder()
-                                .setClaims(claims)
-                                .setExpiration(new Date(Instant.now().toEpochMilli() + expirationSeconds * 1000))
-                                .signWith(SignatureAlgorithm.RS256, privateKey)
-                                .compact();
-        return AesUtil.encrypt(originToken,reEncryptionKey);
+        Date expirationDate = new Date(System.currentTimeMillis() + expirationSeconds * 3600L);
+        String originToken = Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.RS256, privateKey)
+                .compact();
+        return AesUtil.encrypt(originToken, reEncryptionKey);
     }
 
     public static Map<String, Object> parseToken(String token) {
         Map<String, Object> claims = new HashMap<>();
         try {
-            token = AesUtil.decrypt(token,reEncryptionKey);
+            token = AesUtil.decrypt(token, reEncryptionKey);
             claims = Jwts.parser()
                     .setSigningKey(publicKey)
+                    .requireExpiration(new Date(System.currentTimeMillis()))
                     .parseClaimsJws(token).getBody();
         } catch (Exception e) {
         }
@@ -68,7 +70,7 @@ public class JwtTokenUtil {
         Map<String, Object> claims = new HashMap<>();
         String userName = "";
         try {
-            token = AesUtil.decrypt(token,reEncryptionKey);
+            token = AesUtil.decrypt(token, reEncryptionKey);
             claims = Jwts.parser()
                     .setSigningKey(publicKey)
                     .parseClaimsJws(token).getBody();
@@ -81,7 +83,7 @@ public class JwtTokenUtil {
     public static String parseTokenToRoleId(String token) {
         String roleId = "0";
         try {
-            token = AesUtil.decrypt(token,reEncryptionKey);
+            token = AesUtil.decrypt(token, reEncryptionKey);
             Map<String, Object> claims = Jwts.parser()
                     .setSigningKey(publicKey)
                     .parseClaimsJws(token).getBody();
@@ -96,7 +98,7 @@ public class JwtTokenUtil {
     public static String parseTokenToRealName(String token) {
         String userNameCn = "";
         try {
-            token = AesUtil.decrypt(token,reEncryptionKey);
+            token = AesUtil.decrypt(token, reEncryptionKey);
             Map<String, Object> claims = Jwts.parser()
                     .setSigningKey(publicKey)
                     .parseClaimsJws(token).getBody();
@@ -110,22 +112,24 @@ public class JwtTokenUtil {
 
     /**
      * 检查token
+     *
      * @return
      */
-    public static boolean checkToken(String jwtToken){
+    public static Integer checkToken(String jwtToken) {
         Map<String, Object> claims = JwtTokenUtil.parseToken(jwtToken);
-        if(claims.size()==0){
-            return false;
+        if (claims.size() == 0) {
+            return 401;
         }
-        if(!claims.containsKey("exp")){
-            return false;
+        if (!claims.containsKey("exp")) {
+            return 401;
         }
-        Long expiration = new Long((Integer)claims.get("exp"));
-        Long currentTime = Instant.now().toEpochMilli();
-        if(currentTime>expiration){
-
+        Long expiration = new Long((Integer) claims.get("exp"));
+        Long currentTime = System.currentTimeMillis();
+        if (currentTime > expiration) {
+            return 200;
+        } else {
+            return 403;
         }
-        return true;
     }
 
 }
