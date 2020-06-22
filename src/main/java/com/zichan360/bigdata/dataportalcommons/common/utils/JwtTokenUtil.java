@@ -117,12 +117,6 @@ public class JwtTokenUtil {
      */
     public static Integer checkToken(String jwtToken) {
         Map<String, Object> claims = JwtTokenUtil.parseToken(jwtToken);
-        if (claims.size() == 0) {
-            return 401;
-        }
-        if (!claims.containsKey("exp")) {
-            return 401;
-        }
         Long expiration = new Long((Integer) claims.get("exp"));
         Long currentTime = System.currentTimeMillis();
         if (currentTime > expiration) {
