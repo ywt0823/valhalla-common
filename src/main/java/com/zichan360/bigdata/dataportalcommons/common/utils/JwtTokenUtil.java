@@ -59,7 +59,7 @@ public class JwtTokenUtil {
             token = AesUtil.decrypt(token, reEncryptionKey);
             claims = Jwts.parser()
                     .setSigningKey(publicKey)
-                    .requireExpiration(new Date(System.currentTimeMillis()))
+//                    .requireExpiration(new Date(System.currentTimeMillis()))
                     .parseClaimsJws(token).getBody();
         } catch (Exception e) {
         }
@@ -117,6 +117,9 @@ public class JwtTokenUtil {
      */
     public static Integer checkToken(String jwtToken) {
         Map<String, Object> claims = JwtTokenUtil.parseToken(jwtToken);
+        if (claims.isEmpty()){
+            return 401;
+        }
         Long expiration = new Long((Integer) claims.get("exp"));
         Long currentTime = System.currentTimeMillis();
         if (currentTime > expiration) {
