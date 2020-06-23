@@ -128,7 +128,8 @@ public class JwtTokenUtil {
             Claims claims = JwtTokenUtil.parseToken(jwtToken);
             if (Optional.ofNullable(claims).isPresent()) {
                 Date expiredDate = claims.getExpiration();
-                Date nowDate = new Date();
+                //过期时间前5min
+                Date nowDate = new Date(System.currentTimeMillis() - 300000L);
                 if (expiredDate.after(nowDate)) {
                     //没有过期
                     return 200;
