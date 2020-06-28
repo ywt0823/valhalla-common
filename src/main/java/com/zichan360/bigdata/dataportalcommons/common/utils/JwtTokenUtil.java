@@ -12,8 +12,8 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -75,47 +75,33 @@ public class JwtTokenUtil {
     }
 
     public static String parseTokenToUserName(String token) {
-        Map<String, Object> claims = new HashMap<>();
-        String userName = "";
+        Claims claims = parseToken(token);
         try {
-            token = AesUtil.decrypt(token, reEncryptionKey);
-            claims = Jwts.parser()
-                    .setSigningKey(publicKey)
-                    .parseClaimsJws(token).getBody();
-            userName = (String) claims.get(BasicConstant.CLAIM_USER_IDENTIFICATION);
+            return String.valueOf(Objects.requireNonNull(claims).get("userName"));
         } catch (Exception e) {
+            LOG.error(CommonUtil.wrapperErrorLog(e));
+            return null;
         }
-        return userName;
-    }
-
-    public static String parseTokenToRoleId(String token) {
-        String roleId = "0";
-        try {
-            token = AesUtil.decrypt(token, reEncryptionKey);
-            Map<String, Object> claims = Jwts.parser()
-                    .setSigningKey(publicKey)
-                    .parseClaimsJws(token).getBody();
-            roleId = (String) claims.get(BasicConstant.CLAIM_ROLE_IDENTIFICATION);
-        } catch (Exception e) {
-
-        }
-        return roleId;
-
     }
 
     public static String parseTokenToRealName(String token) {
-        String userNameCn = "";
+        Claims claims = parseToken(token);
         try {
-            token = AesUtil.decrypt(token, reEncryptionKey);
-            Map<String, Object> claims = Jwts.parser()
-                    .setSigningKey(publicKey)
-                    .parseClaimsJws(token).getBody();
-            userNameCn = (String) claims.get(BasicConstant.CLAIM_USER_CN_IDENTIFICATION);
+            return String.valueOf(Objects.requireNonNull(claims).get("realName"));
         } catch (Exception e) {
-
+            LOG.error(CommonUtil.wrapperErrorLog(e));
+            return null;
         }
-        return userNameCn;
+    }
 
+    public static String parseTokenToUserId(String token) {
+        Claims claims = parseToken(token);
+        try {
+            return String.valueOf(Objects.requireNonNull(claims).get("userId"));
+        } catch (Exception e) {
+            LOG.error(CommonUtil.wrapperErrorLog(e));
+            return null;
+        }
     }
 
     /**
@@ -142,7 +128,7 @@ public class JwtTokenUtil {
                 return 403;
             }
         } catch (ExpiredJwtException e) {
-            CommonUtil.wrapperErrorLog(e);
+            LOG.error(CommonUtil.wrapperErrorLog(e));
             //过期
             return 403;
         }
