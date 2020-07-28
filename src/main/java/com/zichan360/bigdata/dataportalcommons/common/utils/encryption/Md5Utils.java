@@ -13,9 +13,6 @@ import java.util.Random;
 public class Md5Utils extends AbstractEncryptionUtils {
 
 
-    private final int password_random_length = 6;
-    private final String str = "abcdefghijklmnopqrstuvwxyz0123456789";
-
     /**
      * 加密
      *
@@ -23,7 +20,7 @@ public class Md5Utils extends AbstractEncryptionUtils {
      * @return 加密后的字符串
      */
     @Override
-    public String encryptPassword(String password) {
+    public String encrypt(String password) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             char[] passwordArray = password.toCharArray();
@@ -53,17 +50,18 @@ public class Md5Utils extends AbstractEncryptionUtils {
      *
      * @return 密码
      */
-    @Override
     public Map<String, String> randomPassword() {
         Random random = new Random();
         Map<String, String> result = new HashMap<>(2);
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i <= password_random_length; i++) {
+        int passwordRandomLength = 6;
+        for (int i = 0; i <= passwordRandomLength; i++) {
+            String str = "abcdefghijklmnopqrstuvwxyz0123456789";
             int number = random.nextInt(str.length());
             sb.append(str.charAt(number));
         }
         result.put("password", sb.toString());
-        result.put("encryptPassword", this.encryptPassword(sb.toString()));
+        result.put("encryptPassword", this.encrypt(sb.toString()));
         return result;
     }
 }

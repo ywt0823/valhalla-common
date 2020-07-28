@@ -1,7 +1,5 @@
 package com.zichan360.bigdata.dataportalcommons.common.utils.encryption;
 
-import java.util.Map;
-
 /**
  * @description: 加解密抽象类
  * @author: ywt
@@ -15,7 +13,7 @@ public abstract class AbstractEncryptionUtils {
      * @param password 密码
      * @return 加密后的字符串
      */
-    protected String encryptPassword(String password) {
+    protected String encrypt(String password) {
         return null;
     }
 
@@ -25,16 +23,8 @@ public abstract class AbstractEncryptionUtils {
      * @param encryptionPassword 加密密码
      * @return 解密后的密码
      */
-    protected String decipheringPassword(String encryptionPassword) {
+    protected String decrypt(String encryptionPassword) {
         return null;
     }
 
-    /**
-     * 随机生成密码
-     *
-     * @return 随机生成的密码和加密后的密码
-     */
-    protected Map<String, String> randomPassword() {
-        return null;
-    }
 }

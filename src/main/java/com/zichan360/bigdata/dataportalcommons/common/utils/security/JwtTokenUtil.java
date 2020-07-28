@@ -1,11 +1,13 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils;
+package com.zichan360.bigdata.dataportalcommons.common.utils.security;
 
+import com.zichan360.bigdata.dataportalcommons.common.utils.common.LogWrapperUtil;
+import com.zichan360.bigdata.dataportalcommons.common.utils.encryption.AesUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -21,7 +23,7 @@ import java.util.Optional;
  */
 public class JwtTokenUtil {
 
-    private static final Logger LOG = LogManager.getLogger(JwtTokenUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JwtTokenUtil.class);
     private static final String reEncryptionKey = "3nTBnYv3xqhihQwI_W5H9hIwSfGHsvqs";
     private static final char[] jksKeyPass = "LQjbl3_Csc52PDUWdmfa6KxwARonhJ7N".toCharArray();
     private static final char[] jksStorePass = "Jo_rUjYwW40Gb6uAFi7s1ZzalhEcRyKm".toCharArray();
@@ -42,7 +44,7 @@ public class JwtTokenUtil {
             privateKey = (PrivateKey) keyStore.getKey(alias, jksStorePass);
             publicKey = keyStore.getCertificate(alias).getPublicKey();
         } catch (Exception e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(LogWrapperUtil.wrapperErrorLog(e));
         }
     }
 
@@ -79,7 +81,7 @@ public class JwtTokenUtil {
         try {
             return String.valueOf(Objects.requireNonNull(claims).get("userName"));
         } catch (Exception e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(LogWrapperUtil.wrapperErrorLog(e));
             return null;
         }
     }
@@ -89,7 +91,7 @@ public class JwtTokenUtil {
         try {
             return String.valueOf(Objects.requireNonNull(claims).get("realName"));
         } catch (Exception e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(LogWrapperUtil.wrapperErrorLog(e));
             return null;
         }
     }
@@ -99,7 +101,7 @@ public class JwtTokenUtil {
         try {
             return String.valueOf(Objects.requireNonNull(claims).get("userId"));
         } catch (Exception e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(LogWrapperUtil.wrapperErrorLog(e));
             return null;
         }
     }
@@ -128,7 +130,7 @@ public class JwtTokenUtil {
                 return 403;
             }
         } catch (ExpiredJwtException e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(LogWrapperUtil.wrapperErrorLog(e));
             //过期
             return 403;
         }

@@ -1,7 +1,8 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils;
+package com.zichan360.bigdata.dataportalcommons.common.utils.common;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -13,9 +14,9 @@ import java.net.UnknownHostException;
  * @date: 2018/10/26 15:25
  * @description: 公共工具
  */
-public class CommonUtil {
+public class LogWrapperUtil {
 
-    private static final Logger LOG = LogManager.getLogger(CommonUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LogWrapperUtil.class);
 
     public static String wrapperErrorLog(Exception exception) {
         InetAddress address = null;
@@ -26,7 +27,7 @@ public class CommonUtil {
             exception.printStackTrace(new PrintStream(baos));
             error = baos.toString();
         } catch (UnknownHostException e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(wrapperErrorLog(e));
         }
         return "RUNTIME_ERROR【" + address + "】:" + error;
     }
@@ -36,7 +37,7 @@ public class CommonUtil {
         try {
             address = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(wrapperErrorLog(e));
         }
         return "【" + address + "】:" + info;
     }
@@ -46,7 +47,7 @@ public class CommonUtil {
         try {
             address = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(wrapperErrorLog(e));
         }
         return address.toString();
     }

@@ -1,7 +1,8 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils;
+package com.zichan360.bigdata.dataportalcommons.common.utils.encryption;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.zichan360.bigdata.dataportalcommons.common.utils.common.LogWrapperUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -11,8 +12,8 @@ import javax.crypto.spec.SecretKeySpec;
  * @date: 2018/4/24 11:27
  * @description: AES对数据加密解密
  */
-public class AesUtil {
-    private static final Logger LOG = LogManager.getLogger(AesUtil.class);
+public class AesUtil{
+    private static final Logger LOG = LoggerFactory.getLogger(AesUtil.class);
 
     /**
      * 加密
@@ -34,7 +35,7 @@ public class AesUtil {
             byte[] encrypted = cipher.doFinal(sSrc.getBytes("utf-8"));
             return AesUtil.parseByte2HexStr(encrypted);
         } catch (Exception e) {
-            LOG.error(CommonUtil.wrapperErrorLog(e));
+            LOG.error(LogWrapperUtil.wrapperErrorLog(e));
             return null;
         }
     }
@@ -62,7 +63,7 @@ public class AesUtil {
                 String originalString = new String(original, "utf-8");
                 return originalString;
             } catch (Exception e) {
-                LOG.error(CommonUtil.wrapperErrorLog(e));
+                LOG.error(LogWrapperUtil.wrapperErrorLog(e));
                 return null;
             }
         } catch (Exception ex) {
