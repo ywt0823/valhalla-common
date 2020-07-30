@@ -9,6 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -134,5 +135,39 @@ public class JwtTokenUtil {
             //过期
             return 403;
         }
+    }
+
+    /**
+     * 从request的header中解析出对应的userId
+     *
+     * @param request
+     * @return
+     */
+    public static String parseUserIdFromRequest(HttpServletRequest request) {
+        String userId = "";
+        try {
+            String token = request.getHeader("Authorization").substring("Bearer ".length());
+            userId = parseTokenToUserId(token);
+        } catch (Exception e) {
+        }
+        return userId;
+
+    }
+
+    /**
+     * 从request的header中解析出对应的userId
+     *
+     * @param request
+     * @return
+     */
+    public static String parseUserNameFromRequest(HttpServletRequest request) {
+        String userId = "";
+        try {
+            String token = request.getHeader("Authorization").substring("Bearer ".length());
+            userId = parseTokenToUserName(token);
+        } catch (Exception e) {
+        }
+        return userId;
+
     }
 }
