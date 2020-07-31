@@ -3,8 +3,6 @@ package com.zichan360.bigdata.dataportalcommons.common.utils.common;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
@@ -29,7 +27,7 @@ import java.util.List;
  * @date 2020-07-28 10:39:31
  **/
 public class ExcelUtil {
-    private static Logger log = LoggerFactory.getLogger(ExcelUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
 
     /**
      * 读取Excel（一个sheet）
@@ -47,11 +45,9 @@ public class ExcelUtil {
         if (excelReader == null) {
             return new ArrayList<>();
         }
-
         ReadSheet readSheet = EasyExcel.readSheet(sheetNo).build();
         excelReader.read(readSheet);
         excelReader.finish();
-
         return BeanConvert.objectConvertBean(excelListener.getDataList(), clazz);
     }
 
@@ -204,29 +200,12 @@ public class ExcelUtil {
         return null;
     }
 
-    private static class ExcelListener extends AnalysisEventListener {
-
-        private List<Object> dataList = new ArrayList<>();
 
 
-        @Override
-        public void invoke(Object object, AnalysisContext context) {
-            dataList.add(object);
-        }
 
-        @Override
-        public void doAfterAllAnalysed(AnalysisContext context) {
-        }
-
-        public List<Object> getDataList() {
-            return dataList;
-        }
-
-        public void setDataList(List<Object> dataList) {
-            this.dataList = dataList;
-        }
-    }
-
+    /**
+     * 强转实体类
+     */
     private static class BeanConvert {
         /**
          * 将List<Object> 转换为List<Bean>
