@@ -1,8 +1,10 @@
 package com.zichan360.bigdata.dataportalcommons.common.utils.common;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
@@ -20,6 +22,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ywt
@@ -200,8 +203,18 @@ public class ExcelUtil {
         return null;
     }
 
+    public static List<Map<Integer,Object>> getExcelList(MultipartFile file) throws IOException {
+        ExcelListener excelListener = new ExcelListener();
+        ExcelReaderBuilder excelReaderBuilder = EasyExcelFactory.read(file.getInputStream(), excelListener);
+        excelReaderBuilder.doReadAll();
+        return excelListener.getDataList();
+    }
 
-
+    public static List<Map<Integer,Object>> getExcelList(MultipartFile file,ExcelListener excelListener) throws IOException {
+        ExcelReaderBuilder excelReaderBuilder = EasyExcelFactory.read(file.getInputStream(), excelListener);
+        excelReaderBuilder.doReadAll();
+        return excelListener.getDataList();
+    }
 
     /**
      * 强转实体类
