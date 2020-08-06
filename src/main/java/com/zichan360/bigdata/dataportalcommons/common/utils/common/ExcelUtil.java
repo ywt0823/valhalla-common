@@ -6,7 +6,10 @@ import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.alibaba.excel.support.ExcelTypeEnum;
+import com.alibaba.excel.write.builder.ExcelWriterBuilder;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.excel.write.metadata.WriteTable;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
@@ -19,10 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * @author ywt
@@ -203,17 +204,124 @@ public class ExcelUtil {
         return null;
     }
 
-    public static List<Map<Integer,Object>> getExcelList(MultipartFile file) throws IOException {
+    public static List<Map<Integer, Object>> getExcelList(MultipartFile file) throws IOException {
         ExcelListener excelListener = new ExcelListener();
         ExcelReaderBuilder excelReaderBuilder = EasyExcelFactory.read(file.getInputStream(), excelListener);
         excelReaderBuilder.doReadAll();
         return excelListener.getDataList();
     }
 
-    public static List<Map<Integer,Object>> getExcelList(MultipartFile file,ExcelListener excelListener) throws IOException {
+    public static List<Map<Integer, Object>> getExcelList(MultipartFile file, ExcelListener excelListener) throws IOException {
         ExcelReaderBuilder excelReaderBuilder = EasyExcelFactory.read(file.getInputStream(), excelListener);
         excelReaderBuilder.doReadAll();
         return excelListener.getDataList();
+    }
+
+    /**
+     * 生成多表头的excel
+     *
+     * @param httpServletResponse httpServletResponse
+     * @param header              表头列表
+     * @param fileName            文件名称
+     * @param dataList            数据集
+     * @throws IOException
+     */
+    public static void exportData(HttpServletResponse httpServletResponse, List<List<String>> header, String fileName, List<Map<String, Object>> dataList) throws IOException {
+        httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
+        httpServletResponse.setCharacterEncoding("utf-8");
+        httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + fileName + ExcelTypeEnum.XLSX.getValue());
+        ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
+        ExcelWriter excelWriter = excelWriterBuilder.build();
+        // 创建一个表格，用于 Sheet 中使用
+        WriteTable writeTable = convertHeaderListToTable(header);
+        WriteSheet writeSheet = new WriteSheet();
+        writeSheet.setSheetName(LocalDate.now().toString());
+        excelWriter.write(!Optional.ofNullable(dataList).isPresent() || dataList.isEmpty() ? null : convertDataMapToResultData(dataList), writeSheet, writeTable);
+        // 写数据
+        excelWriter.finish();
+        httpServletResponse.getOutputStream().close();
+    }
+
+    /**
+     * 生成单表头的excel
+     *
+     * @param httpServletResponse httpServletResponse
+     * @param firstHeader         表头列表
+     * @param fileName            文件名称
+     * @param dataList            数据集
+     * @throws IOException
+     */
+    public static void exportData(HttpServletResponse httpServletResponse, String fileName, List<String> firstHeader, List<Map<String, Object>> dataList) throws IOException {
+        httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
+        httpServletResponse.setCharacterEncoding("utf-8");
+        httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + fileName + ExcelTypeEnum.XLSX.getValue());
+        ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
+        ExcelWriter excelWriter = excelWriterBuilder.build();
+        // 创建一个表格，用于 Sheet 中使用
+        ArrayList<List<String>> headerList = new ArrayList<>();
+        firstHeader.forEach(name -> {
+            List<String> nameList = new LinkedList<>();
+            nameList.add(name);
+            headerList.add(nameList);
+        });
+        WriteTable writeTable = convertHeaderListToTable(headerList);
+        WriteSheet writeSheet = new WriteSheet();
+        writeSheet.setSheetName(LocalDate.now().toString());
+        excelWriter.write(!Optional.ofNullable(dataList).isPresent() || dataList.isEmpty() ? null : convertDataMapToResultData(dataList), writeSheet, writeTable);
+        // 写数据
+        excelWriter.finish();
+        httpServletResponse.getOutputStream().close();
+    }
+
+    /**
+     * 生成单表头的excel
+     *
+     * @param httpServletResponse httpServletResponse
+     * @param writeTable          表属性
+     * @param writeSheet          sheet属性
+     * @param fileName            文件名称
+     * @param dataList            数据集
+     * @throws IOException
+     */
+    public static void exportData(HttpServletResponse httpServletResponse, String fileName, WriteTable writeTable, WriteSheet writeSheet, List<Map<String, Object>> dataList) throws IOException {
+        httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
+        httpServletResponse.setCharacterEncoding("utf-8");
+        httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + fileName + ExcelTypeEnum.XLSX.getValue());
+        ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
+        ExcelWriter excelWriter = excelWriterBuilder.build();
+        excelWriter.write(!Optional.ofNullable(dataList).isPresent() || dataList.isEmpty() ? null : convertDataMapToResultData(dataList), writeSheet, writeTable);
+        // 写数据
+        excelWriter.finish();
+        httpServletResponse.getOutputStream().close();
+    }
+
+    /**
+     * 将表头转换成easyExcel的表头类
+     *
+     * @param header 表头列表
+     * @return
+     */
+    private static WriteTable convertHeaderListToTable(List<List<String>> header) {
+        WriteTable writeTable = new WriteTable();
+        writeTable.setHead(header);
+        writeTable.setAutomaticMergeHead(true);
+        return writeTable;
+    }
+
+    /**
+     * 将查询结果转换成两组linkedList对应表头结果
+     *
+     * @param dataList 数据结果
+     * @return
+     */
+    private static LinkedList<LinkedList<String>> convertDataMapToResultData(List<Map<String, Object>> dataList) {
+        LinkedList<LinkedList<String>> resultData = new LinkedList<>();
+        dataList.forEach(map -> {
+            LinkedList<String> mapData = new LinkedList<>();
+            map.forEach((s, o) -> mapData.add(Optional.ofNullable(o).isPresent() ? String.valueOf(o) : ""));
+            resultData.add(mapData);
+        });
+        return resultData;
     }
 
     /**
