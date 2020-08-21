@@ -229,7 +229,7 @@ public class ExcelUtil {
     public static void exportData(HttpServletResponse httpServletResponse, List<List<String>> header, String fileName, List<Map<String, Object>> dataList) throws IOException {
         httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
         httpServletResponse.setCharacterEncoding("utf-8");
-        httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + fileName + ExcelTypeEnum.XLSX.getValue());
+        httpServletResponse.setHeader("Content-disposition", "attachment;filename=\"" + new String((fileName + ExcelTypeEnum.XLSX.getValue()).getBytes("utf-8"),"ISO-8859-1") + "\"");
         ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
         ExcelWriter excelWriter = excelWriterBuilder.build();
         // 创建一个表格，用于 Sheet 中使用
@@ -254,7 +254,7 @@ public class ExcelUtil {
     public static void exportData(HttpServletResponse httpServletResponse, String fileName, List<String> firstHeader, List<Map<String, Object>> dataList) throws IOException {
         httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
         httpServletResponse.setCharacterEncoding("utf-8");
-        httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + fileName + ExcelTypeEnum.XLSX.getValue());
+        httpServletResponse.setHeader("Content-disposition", "attachment;filename=\"" + new String((fileName + ExcelTypeEnum.XLSX.getValue()).getBytes("UTF-8"),"ISO-8859-1") + "\"");
         ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
         ExcelWriter excelWriter = excelWriterBuilder.build();
         // 创建一个表格，用于 Sheet 中使用
@@ -286,7 +286,7 @@ public class ExcelUtil {
     public static void exportData(HttpServletResponse httpServletResponse, String fileName, WriteTable writeTable, WriteSheet writeSheet, List<Map<String, Object>> dataList) throws IOException {
         httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
         httpServletResponse.setCharacterEncoding("utf-8");
-        httpServletResponse.setHeader("Content-disposition", "attachment;filename=" + fileName + ExcelTypeEnum.XLSX.getValue());
+        httpServletResponse.setHeader("Content-disposition", "attachment;filename=\"" + new String((fileName + ExcelTypeEnum.XLSX.getValue()).getBytes("utf-8"),"ISO-8859-1") + "\"");
         ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
         ExcelWriter excelWriter = excelWriterBuilder.build();
         excelWriter.write(!Optional.ofNullable(dataList).isPresent() || dataList.isEmpty() ? null : convertDataMapToResultData(dataList), writeSheet, writeTable);
