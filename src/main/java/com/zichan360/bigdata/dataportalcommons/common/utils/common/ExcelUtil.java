@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -230,6 +231,7 @@ public class ExcelUtil {
         httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
         httpServletResponse.setCharacterEncoding("utf-8");
         httpServletResponse.setHeader("Content-disposition", "attachment;filename=\"" + new String((fileName + ExcelTypeEnum.XLSX.getValue()).getBytes("utf-8"),"ISO-8859-1") + "\"");
+        httpServletResponse.setHeader("fileName", URLEncoder.encode(fileName+ExcelTypeEnum.XLSX,"UTF-8"));
         ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
         ExcelWriter excelWriter = excelWriterBuilder.build();
         // 创建一个表格，用于 Sheet 中使用
@@ -255,6 +257,7 @@ public class ExcelUtil {
         httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
         httpServletResponse.setCharacterEncoding("utf-8");
         httpServletResponse.setHeader("Content-disposition", "attachment;filename=\"" + new String((fileName + ExcelTypeEnum.XLSX.getValue()).getBytes("UTF-8"),"ISO-8859-1") + "\"");
+        httpServletResponse.setHeader("fileName", URLEncoder.encode(fileName+ExcelTypeEnum.XLSX,"UTF-8"));
         ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
         ExcelWriter excelWriter = excelWriterBuilder.build();
         // 创建一个表格，用于 Sheet 中使用
@@ -287,6 +290,7 @@ public class ExcelUtil {
         httpServletResponse.setContentType("application/vnd.ms-excel;charset=utf-8");
         httpServletResponse.setCharacterEncoding("utf-8");
         httpServletResponse.setHeader("Content-disposition", "attachment;filename=\"" + new String((fileName + ExcelTypeEnum.XLSX.getValue()).getBytes("utf-8"),"ISO-8859-1") + "\"");
+        httpServletResponse.setHeader("fileName", URLEncoder.encode(fileName+ExcelTypeEnum.XLSX,"UTF-8"));
         ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(httpServletResponse.getOutputStream());
         ExcelWriter excelWriter = excelWriterBuilder.build();
         excelWriter.write(!Optional.ofNullable(dataList).isPresent() || dataList.isEmpty() ? null : convertDataMapToResultData(dataList), writeSheet, writeTable);
