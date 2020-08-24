@@ -10,7 +10,8 @@ public class ResultPageInfo implements Serializable {
     public ResultPageInfo() {
     }
 
-    public ResultPageInfo(String totalRecord, String currentPage, String pageSize) {
+    public ResultPageInfo(String totalRecord, String currentPage, String pageSize,String totalPage) {
+        this.totalPage=totalPage;
         this.totalRecord = totalRecord;
         this.currentPage = currentPage;
         this.pageSize = pageSize;
@@ -20,6 +21,10 @@ public class ResultPageInfo implements Serializable {
     public String totalRecord; //总记录数
     public String currentPage;//当前页
     public String pageSize;//页面最大记录数
+    /**
+     * 总页数
+     */
+    public String totalPage;
 
     public String getTotalRecord() {
         return totalRecord;
@@ -43,5 +48,13 @@ public class ResultPageInfo implements Serializable {
 
     public void setPageSize(String pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(String totalPage) {
+        this.totalPage = totalPage;
     }
 }

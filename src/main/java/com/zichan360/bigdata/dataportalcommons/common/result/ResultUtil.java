@@ -1,5 +1,9 @@
 package com.zichan360.bigdata.dataportalcommons.common.result;
 
+import com.github.pagehelper.PageInfo;
+
+import java.util.List;
+
 /**
  * @author ywt
  * @date 2020年2月9日 08:58:39
@@ -28,6 +32,16 @@ public class ResultUtil {
         return result;
     }
 
+    public static <T> Result<List<T>> success(PageInfo<T> pageResult) {
+        Result<List<T>> result = new Result<>();
+        result.setData(pageResult.getList());
+        result.setMsg("接口调用成功");
+        result.setStatus(ResultEnum.SUCCESS);
+        result.setStatus_code(200);
+        ResultPageInfo resultPageInfo = new ResultPageInfo(String.valueOf(pageResult.getTotal()), String.valueOf(pageResult.getPageNum()), String.valueOf(pageResult.getPageSize()),String.valueOf(pageResult.getPages()));
+        result.setPageInfo(resultPageInfo);
+        return result;
+    }
 
     /**
      * 提供给部分不需要出參的接口
@@ -35,7 +49,7 @@ public class ResultUtil {
      * @return
      */
     public static Result success() {
-        return success(null);
+        return success(null,null);
     }
 
     /**
@@ -52,7 +66,7 @@ public class ResultUtil {
         result.setStatus_code(1000);
         result.setMsg(msg);
         result.setData(null);
-        ResultPageInfo resultPageInfo = new ResultPageInfo("0", "0", "0");
+        ResultPageInfo resultPageInfo = new ResultPageInfo("0", "0", "0","0");
         result.setPageInfo(resultPageInfo);
         return result;
     }
@@ -62,7 +76,7 @@ public class ResultUtil {
         result.setStatus(status);
         result.setStatus_code(status_code);
         result.setMsg(msg);
-        ResultPageInfo resultPageInfo = new ResultPageInfo("0", "0", "0");
+        ResultPageInfo resultPageInfo = new ResultPageInfo("0", "0", "0","0");
         result.setPageInfo(resultPageInfo);
         return result;
     }
