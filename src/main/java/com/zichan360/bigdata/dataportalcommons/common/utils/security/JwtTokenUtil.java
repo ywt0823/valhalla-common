@@ -170,4 +170,15 @@ public class JwtTokenUtil {
         return userId;
 
     }
+
+    /**
+     * 判断是否是admin用户
+     *
+     * @param httpServletRequest httpServletRequest
+     * @return
+     */
+    public static Boolean isAdminUser(HttpServletRequest httpServletRequest) {
+        String userId = parseUserIdFromRequest(httpServletRequest);
+        return "1".equals(userId);
+    }
 }
