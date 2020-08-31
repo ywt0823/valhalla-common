@@ -300,6 +300,30 @@ public class ExcelUtil {
     }
 
     /**
+     * 生成EXCEL并存入服务器路径中
+     * @param fileOutputStream
+     * @param firstHeader
+     * @param dataList
+     */
+    public static void putExcelToServer(FileOutputStream fileOutputStream, List<String> firstHeader, List<Map<String, Object>> dataList) throws IOException {
+        ExcelWriterBuilder excelWriterBuilder = EasyExcel.write(fileOutputStream);
+        ExcelWriter excelWriter = excelWriterBuilder.build();
+        // 创建一个表格，用于 Sheet 中使用
+        ArrayList<List<String>> headerList = new ArrayList<>();
+        firstHeader.forEach(name -> {
+            List<String> nameList = new LinkedList<>();
+            nameList.add(name);
+            headerList.add(nameList);
+        });
+        WriteTable writeTable = convertHeaderListToTable(headerList);
+        WriteSheet writeSheet = new WriteSheet();
+        writeSheet.setSheetName(LocalDate.now().toString());
+        excelWriter.write(!Optional.ofNullable(dataList).isPresent() || dataList.isEmpty() ? null : convertDataMapToResultData(dataList), writeSheet, writeTable);
+        // 写数据
+        excelWriter.finish();
+    }
+
+    /**
      * 将表头转换成easyExcel的表头类
      *
      * @param header 表头列表
