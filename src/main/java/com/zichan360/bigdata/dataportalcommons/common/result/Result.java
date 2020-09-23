@@ -1,5 +1,7 @@
 package com.zichan360.bigdata.dataportalcommons.common.result;
 
+import java.util.Objects;
+
 /**
 * @author ywt
 * @Date 2019年2月9日 08:59:01
@@ -56,14 +58,50 @@ public class Result<T> {
     }
 
 
+    @Override
     public String toString() {
         return "Result{" +
-                "status='" + status.name() +"'"+
-                ",status_code='" + status_code +"'"+
-                ", msg='" + msg +"'"+
-                "}";
+                "status=" + status +
+                ", status_code=" + status_code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                ", resultPageInfo=" + resultPageInfo +
+                '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Result)) {
+            return false;
+        }
 
+        Result<?> result = (Result<?>) o;
 
+        if (getStatus() != result.getStatus()) {
+            return false;
+        }
+        if (getStatus_code() != null ? !getStatus_code().equals(result.getStatus_code()) : result.getStatus_code() != null) {
+            return false;
+        }
+        if (getMsg() != null ? !getMsg().equals(result.getMsg()) : result.getMsg() != null) {
+            return false;
+        }
+        if (getData() != null ? !getData().equals(result.getData()) : result.getData() != null) {
+            return false;
+        }
+        return Objects.equals(resultPageInfo, result.resultPageInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getStatus() != null ? getStatus().hashCode() : 0;
+        result = 31 * result + (getStatus_code() != null ? getStatus_code().hashCode() : 0);
+        result = 31 * result + (getMsg() != null ? getMsg().hashCode() : 0);
+        result = 31 * result + (getData() != null ? getData().hashCode() : 0);
+        result = 31 * result + (resultPageInfo != null ? resultPageInfo.hashCode() : 0);
+        return result;
+    }
 }
