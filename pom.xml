@@ -6,10 +6,10 @@
     <parent>
         <artifactId>data-service-portal-parent</artifactId>
         <groupId>com.zichan360.bigdata</groupId>
-        <version>1.0</version>
+        <version>1.1</version>
     </parent>
     <artifactId>data-service-portal-common</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
     <packaging>jar</packaging>
 
     <dependencies>

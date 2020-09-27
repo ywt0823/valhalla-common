@@ -113,7 +113,7 @@ public class ZipUtil {
 
     /**
      * @param newFileName   压缩文件名称
-     * @param inputFileName 要压缩文件的路径
+     * @param inputFilePath 要压缩文件的路径
      * @param destDir       压缩文件存放目录
      * @throws Exception
      */
@@ -135,7 +135,7 @@ public class ZipUtil {
                 zipOut.putNextEntry(new ZipEntry(inputFile.getName()));
 
                 int nNumber;
-                byte[] buffer = new byte[512];
+                byte[] buffer = new byte[1024 * 1024 * 50];
                 while ((nNumber = in.read(buffer)) != -1) {
                     zipOut.write(buffer, 0, nNumber);
                 }
@@ -186,7 +186,7 @@ public class ZipUtil {
             out.close();
         }
 
-        return  contentList.toArray(new String[0]);
+        return contentList.toArray(new String[0]);
     }
 
     public static void decompress(String inputFileName) throws Exception {
