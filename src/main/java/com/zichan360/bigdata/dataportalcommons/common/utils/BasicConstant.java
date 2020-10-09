@@ -104,6 +104,8 @@ public class BasicConstant {
     public static final String EXCEL07_SUFFIX = ".xlsx";
     public static final String RETURN_CODE_KEY = "code";
     public static final String RETURN_MESSAGE_KEY = "message";
+    public static final Integer PAGESIZE_MAX = 500;
+    public static final Integer PAGESIZE_DEFAULT = 10;
     /**
      * 列元素
      */

@@ -37,7 +37,7 @@ public class ConcurrentExcelUtil {
         Integer threadNum = Runtime.getRuntime().availableProcessors();
         Long totalCount = queryTotalCount(sql, jdbcTemplate);
         Long batchNum = computeBatchNum(threadNum, totalCount);
-        excelName = generateNewExcelName(excelName);
+//        excelName = generateNewExcelName(excelName);
         String path = generateExcelFile(excelName, totalCount, threadNum, batchNum, sql, jdbcTemplate, firstHeader, zhEnRelation);
         Long endTime = Instant.now().toEpochMilli();
         Long castSecond = (endTime - beginTime) / 1000;
@@ -53,7 +53,7 @@ public class ConcurrentExcelUtil {
             threadNum = cpuCount;
         }
         Long totalCount = queryTotalCount(sql, jdbcTemplate);
-        excelName = generateNewExcelName(excelName);
+//        excelName = generateNewExcelName(excelName);
         String path = generateExcelFile(excelName, totalCount, threadNum, batchNum, sql, jdbcTemplate, firstHeader, zhEnRelation);
         Long endTime = Instant.now().toEpochMilli();
         Long castSecond = (endTime - beginTime) / 1000;
@@ -94,9 +94,9 @@ public class ConcurrentExcelUtil {
     }
 
 
-    private static String generateExcelFile(String excelName, Long totalCount, Integer threadNum, Long batchNum, String sql, JdbcTemplate jdbcTemplate, List<String> firstHeader, Map<String, String> zhEnRelation) {
+    private static String generateExcelFile(String excelPathName, Long totalCount, Integer threadNum, Long batchNum, String sql, JdbcTemplate jdbcTemplate, List<String> firstHeader, Map<String, String> zhEnRelation) {
 
-        String excelPathName = "/" + excelName;
+//        String excelPathName = "/" + excelName;
         try {
             FileOutputStream fos = new FileOutputStream(excelPathName, true);
             SXSSFWorkbook wb = new SXSSFWorkbook(10000);
