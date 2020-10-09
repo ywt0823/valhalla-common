@@ -2,6 +2,7 @@ package com.zichan360.bigdata.dataportalcommons.common.utils;
 
 /**
  * 基础的常量类
+ *
  * @author sunweihong
  */
 public class BasicConstant {
@@ -91,10 +92,10 @@ public class BasicConstant {
     public static final String STR_CURLY_BRACKETS_RIGHT = "}";
 
     public static final String REGEX_STR_VERTICAL_BAR = "\\|";
-    public static final String CLAIM_USER_IDENTIFICATION = "userName";
-    public static final String CLAIM_ROLE_IDENTIFICATION = "roleId";
-    public static final String CLAIM_USER_CN_IDENTIFICATION = "realName";
-    public static final String USER_AUTH_IDENTIFICATION = "userAuth";
+    public static final String CLAIM_USER_NAME = "userName";
+    public static final String CLAIM_USER_ID = "userId";
+    public static final String CLAIM_REAL_NAME = "realName";
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     public static final String DATE_FRM_YYYY_MM_DD_HH_MI_SS = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FRM_YYYYMMDDHHMISS = "yyyyMMddHHmmss";
@@ -136,11 +137,6 @@ public class BasicConstant {
      */
     public static final String ROW_ELEMENT = "row";
     /**
-     * 时间格式化字符串
-     */
-    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static final String DATE_FORMAT2 = "yyyy-MM-dd";
-    /**
      * 填充字符串
      */
     public static final String CELL_FILL_STR = "@";
@@ -153,11 +149,11 @@ public class BasicConstant {
      */
     public static String SCIENTIFIC_NOTATION_REGX = "[+-]?[\\d]+([\\.][\\d]*)?([Ee][+-]?[0-9]{0,2})?";
 
-    public static int TIMEOUT_TIME=5000;
+    public static int TIMEOUT_TIME = 5000;
 
-    public static String STR_TRUE="true";
+    public static String STR_TRUE = "true";
 
-    public static String STR_FALSE="false";
+    public static String STR_FALSE = "false";
 
 
     private BasicConstant() {

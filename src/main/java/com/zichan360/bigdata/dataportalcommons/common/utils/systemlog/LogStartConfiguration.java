@@ -25,7 +25,7 @@ public class LogStartConfiguration implements ImportBeanDefinitionRegistrar {
         log.info("packages value:" + importingClassMetadata.getAnnotationAttributes(EnableAutoConfiguration.class.getName()));
         String[] packageArray = (String[]) Objects.requireNonNull(importingClassMetadata.getAnnotationAttributes(EnableAutoConfiguration.class.getName())).get("packages");
         List<String> packages = Arrays.asList(packageArray);
-        BeanDefinitionBuilder bdb = BeanDefinitionBuilder.rootBeanDefinition(EnableAutoConfiguration.class);
+        BeanDefinitionBuilder bdb = BeanDefinitionBuilder.rootBeanDefinition(LogInfo.class);
         bdb.addPropertyValue("packages", packages);
         registry.registerBeanDefinition(EnableAutoConfiguration.class.getName(), bdb.getBeanDefinition());
     }

@@ -3,6 +3,7 @@ package com.zichan360.bigdata.dataportalcommons.common.utils.httpclient;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.istack.NotNull;
 import com.zichan360.bigdata.dataportalcommons.common.utils.common.LogWrapperUtil;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -40,7 +41,7 @@ public class HttpClientUtil {
      * @param token    Token
      * @return 返回结果
      */
-    public static JSONObject sendPostByFormData(String url, Map<String, String> map, String encoding, String token) throws MalformedURLException {
+    public static JSONObject sendPostByFormData(@NotNull final String url, final Map<String, String> map, final String encoding, final String token) throws MalformedURLException {
         return getResult(Objects.requireNonNull(sendData(new URL(url), map, ContentType.APPLICATION_FORM_URLENCODED, (apiUrl, body, contentType) -> {
             // 创建post方式请求对象
             HttpPost httpPost = getHttpPost(url);
@@ -74,13 +75,13 @@ public class HttpClientUtil {
      * @return 返回结果
      * @throws MalformedURLException
      */
-    public static JSONObject sendPostDataByJson(String url, String json, String encoding, String token) throws MalformedURLException {
+    public static JSONObject sendPostDataByJson(@NotNull final String url, final String json, final String encoding, final String token) throws MalformedURLException {
         return getResult(Objects.requireNonNull(sendData(new URL(url), json, ContentType.APPLICATION_FORM_URLENCODED, (apiUrl, body, contentType) -> {
             // 创建post方式请求对象
             HttpPost httpPost = getHttpPost(url);
             // 设置参数到请求对象中
             StringEntity stringEntity = new StringEntity(json, ContentType.APPLICATION_JSON);
-            stringEntity.setContentEncoding(encoding);
+            stringEntity.setContentEncoding(encoding.isEmpty() ? ContentType.APPLICATION_JSON.toString() : encoding);
             httpPost.setEntity(stringEntity);
             if (!StringUtils.isEmpty(token)) {
                 httpPost.setHeader("Authorization", "Bearer " + token);
@@ -100,7 +101,7 @@ public class HttpClientUtil {
      * @return 返回结果
      * @throws MalformedURLException
      */
-    public static JSONObject sendGetData(String url, String encoding, String token) throws MalformedURLException {
+    public static JSONObject sendGetData(@NotNull final String url, final String encoding, final String token) throws MalformedURLException {
         // 通过请求对象获取响应对象
         return getResult(Objects.requireNonNull(sendData(new URL(url), null, null, (apiUrl, body, contentType) -> {
             HttpGet httpGet = getHttpGet(url);

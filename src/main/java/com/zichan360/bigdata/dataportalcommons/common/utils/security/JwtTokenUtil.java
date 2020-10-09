@@ -1,5 +1,6 @@
 package com.zichan360.bigdata.dataportalcommons.common.utils.security;
 
+import com.zichan360.bigdata.dataportalcommons.common.utils.BasicConstant;
 import com.zichan360.bigdata.dataportalcommons.common.utils.common.LogWrapperUtil;
 import com.zichan360.bigdata.dataportalcommons.common.utils.encryption.AesUtil;
 import io.jsonwebtoken.Claims;
@@ -80,7 +81,7 @@ public class JwtTokenUtil {
     public static String parseTokenToUserName(String token) {
         Claims claims = parseToken(token);
         try {
-            return String.valueOf(Objects.requireNonNull(claims).get("userName"));
+            return String.valueOf(Objects.requireNonNull(claims).get(BasicConstant.CLAIM_USER_NAME));
         } catch (Exception e) {
             LOG.error(LogWrapperUtil.wrapperErrorLog(e));
             return null;
@@ -90,7 +91,7 @@ public class JwtTokenUtil {
     public static String parseTokenToRealName(String token) {
         Claims claims = parseToken(token);
         try {
-            return String.valueOf(Objects.requireNonNull(claims).get("realName"));
+            return String.valueOf(Objects.requireNonNull(claims).get(BasicConstant.CLAIM_REAL_NAME));
         } catch (Exception e) {
             LOG.error(LogWrapperUtil.wrapperErrorLog(e));
             return null;
@@ -100,7 +101,7 @@ public class JwtTokenUtil {
     public static String parseTokenToUserId(String token) {
         Claims claims = parseToken(token);
         try {
-            return String.valueOf(Objects.requireNonNull(claims).get("userId"));
+            return String.valueOf(Objects.requireNonNull(claims).get(BasicConstant.CLAIM_USER_ID));
         } catch (Exception e) {
             LOG.error(LogWrapperUtil.wrapperErrorLog(e));
             return null;
@@ -146,7 +147,7 @@ public class JwtTokenUtil {
     public static String parseUserIdFromRequest(HttpServletRequest request) {
         String userId = "";
         try {
-            String token = request.getHeader("Authorization").substring("Bearer ".length());
+            String token = request.getHeader(BasicConstant.AUTHORIZATION_HEADER).substring("Bearer ".length());
             userId = parseTokenToUserId(token);
         } catch (Exception e) {
         }
@@ -155,19 +156,36 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 从request的header中解析出对应的userId
+     * 从request的header中解析出对应的userName
      *
      * @param request
      * @return
      */
     public static String parseUserNameFromRequest(HttpServletRequest request) {
-        String userId = "";
+        String userName = "";
         try {
-            String token = request.getHeader("Authorization").substring("Bearer ".length());
-            userId = parseTokenToUserName(token);
+            String token = request.getHeader(BasicConstant.AUTHORIZATION_HEADER).substring("Bearer ".length());
+            userName = parseTokenToUserName(token);
         } catch (Exception e) {
         }
-        return userId;
+        return userName;
+
+    }
+
+    /**
+     * 从request的header中解析出对应的realName
+     *
+     * @param request
+     * @return
+     */
+    public static String parseRealNameFromRequest(HttpServletRequest request) {
+        String realName = "";
+        try {
+            String token = request.getHeader(BasicConstant.AUTHORIZATION_HEADER).substring("Bearer ".length());
+            realName = parseTokenToRealName(token);
+        } catch (Exception e) {
+        }
+        return realName;
 
     }
 
