@@ -16,11 +16,11 @@ public class ResultUtil {
      * @param t
      * @return
      */
-    public static <T> Result<T> success(final T t) {
+    public static <T> Result<T> success(@NotNull final T t) {
         return success(t, null);
     }
 
-    public static <T> Result<T> success(final T t, final ResultPageInfo resultPageInfo) {
+    public static <T> Result<T> success(@NotNull final T t, final ResultPageInfo resultPageInfo) {
         Result<T> result = new Result<>();
         result.setStatus(ResultEnum.SUCCESS);
         result.setStatus_code(200);
@@ -30,7 +30,7 @@ public class ResultUtil {
         return result;
     }
 
-    public static <T> Result<T> success(final T t, @NotNull final String message, final ResultPageInfo resultPageInfo) {
+    public static <T> Result<T> success(@NotNull final T t, @NotNull final String message, final ResultPageInfo resultPageInfo) {
         Result<T> result = new Result<>();
         result.setStatus(ResultEnum.SUCCESS);
         result.setStatus_code(200);
@@ -40,7 +40,7 @@ public class ResultUtil {
         return result;
     }
 
-    public static <T> Result<List<T>> success(final PageInfo<T> pageResult) {
+    public static <T> Result<List<T>> success(@NotNull final PageInfo<T> pageResult) {
         Result<List<T>> result = new Result<>();
         result.setData(pageResult.getList());
         result.setMsg("接口调用成功");
@@ -67,7 +67,7 @@ public class ResultUtil {
      * @param msg
      * @return
      */
-    public static Result error(final ResultEnum status, final String msg) {
+    public static Result error(@NotNull final ResultEnum status, @NotNull final String msg) {
         Result result = new Result();
         result.setStatus(status);
         //1000,程序默认错误
@@ -79,7 +79,7 @@ public class ResultUtil {
         return result;
     }
 
-    public static Result error(final ResultEnum status, final Integer status_code, final String msg) {
+    public static Result error(@NotNull final ResultEnum status, @NotNull final Integer status_code, @NotNull final String msg) {
         Result result = new Result();
         result.setStatus(status);
         result.setStatus_code(status_code);
