@@ -16,7 +16,7 @@ public class Base64Utils extends AbstractEncryptionUtils{
      * @return 加密后的字符串
      */
     @Override
-    protected String encrypt(String password) {
+    public String encrypt(String password) {
         return Base64.getEncoder().encodeToString(password.getBytes());
     }
 
@@ -27,8 +27,8 @@ public class Base64Utils extends AbstractEncryptionUtils{
      * @return 解密后的密码
      */
     @Override
-    protected String decrypt(String encryptionPassword) {
-        return Arrays.toString(Base64.getDecoder().decode(encryptionPassword));
+    public String decrypt(String encryptionPassword) {
+        return new String(Base64.getDecoder().decode(encryptionPassword));
     }
 
 }
