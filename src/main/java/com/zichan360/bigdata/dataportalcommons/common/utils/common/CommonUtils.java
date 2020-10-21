@@ -3,6 +3,7 @@ package com.zichan360.bigdata.dataportalcommons.common.utils.common;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class CommonUtils {
         root.put(idName, rootNodeValue);
         root.put("child", new JSONArray());
         for (Object data : datas) {
-            JSONObject jsonNode = JSON.parseObject(JSON.toJSONString(data));
+            JSONObject jsonNode = JSON.parseObject(JSON.toJSONString(data, SerializerFeature.WriteNullStringAsEmpty));
             String relationPropertyVaule = jsonNode.getString(propertyNameOfRelationNode);
             JSONObject treeNode = findTreeNode(root, idName, relationPropertyVaule);
             JSONArray child = new JSONArray();
@@ -50,7 +51,7 @@ public class CommonUtils {
      * @param idValue 唯一标识的值
      * @return 查找的节点
      */
-    public static JSONObject findTreeNode(JSONObject originObject, String idName, String idValue) {
+    private static JSONObject findTreeNode(JSONObject originObject, String idName, String idValue) {
         JSONObject result = null;
         String nodeIdVaule = originObject.getString(idName);
         if (idValue.equals(nodeIdVaule)) {
