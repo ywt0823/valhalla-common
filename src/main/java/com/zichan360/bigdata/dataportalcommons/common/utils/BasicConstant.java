@@ -159,11 +159,11 @@ public class BasicConstant {
     /**
      * redis上消息组名称(日志组)
      */
-    private static final String REDIS_STREAM_LOG_GROUP_NAME="log_group";
+    public static final String REDIS_STREAM_LOG_GROUP_NAME="log_group";
     /**
      * redis上消息队列信道名称(日志信道)
      */
-    private static final String REDIS_LOG_MESSAGE_QUEUE_NAME="log_queue";
+    public static final String REDIS_LOG_MESSAGE_QUEUE_NAME="log_queue";
 
 
     private BasicConstant() {
