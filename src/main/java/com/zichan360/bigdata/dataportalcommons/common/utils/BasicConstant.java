@@ -149,13 +149,21 @@ public class BasicConstant {
     /**
      * 科学计数法正则表达式
      */
-    public static String SCIENTIFIC_NOTATION_REGX = "[+-]?[\\d]+([\\.][\\d]*)?([Ee][+-]?[0-9]{0,2})?";
+    public static final String SCIENTIFIC_NOTATION_REGX = "[+-]?[\\d]+([\\.][\\d]*)?([Ee][+-]?[0-9]{0,2})?";
 
-    public static int TIMEOUT_TIME = 5000;
+    public static final int TIMEOUT_TIME = 5000;
 
-    public static String STR_TRUE = "true";
+    public static final String STR_TRUE = "true";
 
-    public static String STR_FALSE = "false";
+    public static final String STR_FALSE = "false";
+    /**
+     * redis上消息组名称
+     */
+    private static final String REDIS_STREAM_LOG_GROUP_NAME="log_group";
+    /**
+     * redis上消息队列信道名称
+     */
+    private static final String REDIS_MESSAGE_QUEUE_NAME="log_name";
 
 
     private BasicConstant() {
