@@ -13,7 +13,7 @@ public abstract class AbstractEncryptionUtils {
      * @param password 密码
      * @return 加密后的字符串
      */
-    protected String encrypt(String password) {
+    protected  String encrypt(String password) {
         return null;
     }
 

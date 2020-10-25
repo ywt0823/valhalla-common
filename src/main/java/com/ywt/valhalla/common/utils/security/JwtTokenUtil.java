@@ -1,8 +1,8 @@
 package com.ywt.valhalla.common.utils.security;
 
 import com.ywt.valhalla.common.utils.BasicConstant;
-import com.ywt.valhalla.common.utils.encryption.AesUtil;
 import com.ywt.valhalla.common.utils.common.LogWrapperUtil;
+import com.ywt.valhalla.common.utils.encryption.Base64Utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -11,14 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author admin
@@ -26,29 +19,8 @@ import java.util.Optional;
 public class JwtTokenUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(JwtTokenUtil.class);
-    private static final String reEncryptionKey = "3nTBnYv3xqhihQwI_W5H9hIwSfGHsvqs";
-    private static final char[] jksKeyPass = "LQjbl3_Csc52PDUWdmfa6KxwARonhJ7N".toCharArray();
-    private static final char[] jksStorePass = "Jo_rUjYwW40Gb6uAFi7s1ZzalhEcRyKm".toCharArray();
-    private static final String alias = "jwt";
-
-    /**
-     * 寻找证书文件
-     */
-    private static InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("jwt.jks");
-    private static PrivateKey privateKey = null;
-    private static PublicKey publicKey = null;
-
-    static {
-        try {
-            //将jwt的密码存储在jks文件中
-            KeyStore keyStore = KeyStore.getInstance("JKS");
-            keyStore.load(inputStream, jksKeyPass);
-            privateKey = (PrivateKey) keyStore.getKey(alias, jksStorePass);
-            publicKey = keyStore.getCertificate(alias).getPublicKey();
-        } catch (Exception e) {
-            LOG.error(LogWrapperUtil.wrapperErrorLog(e));
-        }
-    }
+    private static final Base64Utils base64Utils = new Base64Utils();
+    private static final String privateKey = "valhalla";
 
     public static String generateToken(Map<String, Object> claims, Long expirationSeconds) {
         Date expirationDate = new Date(System.currentTimeMillis() + expirationSeconds * 3600L);
@@ -60,17 +32,17 @@ public class JwtTokenUtil {
                 //过期时间
                 .setExpiration(expirationDate)
                 //加密方式
-                .signWith(SignatureAlgorithm.RS256, privateKey)
+                .signWith(SignatureAlgorithm.HS512,privateKey)
                 //生成
                 .compact();
-        return AesUtil.encrypt(originToken, reEncryptionKey);
+        return base64Utils.encrypt(originToken);
     }
 
     public static Claims parseToken(String token) {
         try {
-            token = AesUtil.decrypt(token, reEncryptionKey);
+            token = base64Utils.decrypt(token);
             return Jwts.parser()
-                    .setSigningKey(publicKey)
+                    .setSigningKey(privateKey)
                     .parseClaimsJws(token).getBody();
         } catch (Exception e) {
             return null;
