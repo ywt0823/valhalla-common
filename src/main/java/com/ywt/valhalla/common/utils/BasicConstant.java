@@ -1,9 +1,9 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils;
+package com.ywt.valhalla.common.utils;
 
 /**
  * 基础的常量类
  *
- * @author sunweihong
+ * @author yangwentao
  */
 public class BasicConstant {
     public static final char CHAR_TAB = '\t';

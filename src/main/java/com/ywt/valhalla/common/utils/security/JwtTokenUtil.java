@@ -1,8 +1,8 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.security;
+package com.ywt.valhalla.common.utils.security;
 
-import com.zichan360.bigdata.dataportalcommons.common.utils.BasicConstant;
-import com.zichan360.bigdata.dataportalcommons.common.utils.common.LogWrapperUtil;
-import com.zichan360.bigdata.dataportalcommons.common.utils.encryption.AesUtil;
+import com.ywt.valhalla.common.utils.BasicConstant;
+import com.ywt.valhalla.common.utils.encryption.AesUtil;
+import com.ywt.valhalla.common.utils.common.LogWrapperUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

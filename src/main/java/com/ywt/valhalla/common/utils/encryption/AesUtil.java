@@ -1,6 +1,6 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.encryption;
+package com.ywt.valhalla.common.utils.encryption;
 
-import com.zichan360.bigdata.dataportalcommons.common.utils.common.LogWrapperUtil;
+import com.ywt.valhalla.common.utils.common.LogWrapperUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,7 +8,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * @Author: sunweihong
+ * @Author: yangwentao
  * @date: 2018/4/24 11:27
  * @description: AES对数据加密解密
  */

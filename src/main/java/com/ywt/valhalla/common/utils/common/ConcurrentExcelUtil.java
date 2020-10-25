@@ -1,6 +1,6 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.common;
+package com.ywt.valhalla.common.utils.common;
 
-import com.zichan360.bigdata.dataportalcommons.common.utils.BasicConstant;
+import com.ywt.valhalla.common.utils.BasicConstant;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -22,7 +22,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 /**
  * ConcurrentExcelUtil
  *
- * @author sunweihong
+ * @author yangwentao
  * @desc 并发生成excel文件
  * @date 2020/9/27 15:11
  **/

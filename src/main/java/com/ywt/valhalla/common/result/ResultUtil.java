@@ -1,4 +1,4 @@
-package com.zichan360.bigdata.dataportalcommons.common.result;
+package com.ywt.valhalla.common.result;
 
 import com.github.pagehelper.PageInfo;
 import com.sun.istack.NotNull;

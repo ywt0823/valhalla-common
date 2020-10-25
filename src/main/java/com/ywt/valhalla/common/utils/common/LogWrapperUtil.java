@@ -1,4 +1,4 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.common;
+package com.ywt.valhalla.common.utils.common;
 
 
 import org.slf4j.Logger;
@@ -10,7 +10,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @author: sunweihong
+ * @author: yangwentao
  * @date: 2018/10/26 15:25
  * @description: 公共工具
  */

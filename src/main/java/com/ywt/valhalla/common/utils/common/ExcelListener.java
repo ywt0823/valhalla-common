@@ -1,4 +1,4 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.common;
+package com.ywt.valhalla.common.utils.common;
 
 /**
  * @author ywt

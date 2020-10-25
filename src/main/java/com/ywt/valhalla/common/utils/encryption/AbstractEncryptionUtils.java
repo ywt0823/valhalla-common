@@ -1,4 +1,4 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.encryption;
+package com.ywt.valhalla.common.utils.encryption;
 
 /**
  * @description: 加解密抽象类

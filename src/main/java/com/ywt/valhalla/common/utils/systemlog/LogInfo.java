@@ -1,4 +1,4 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.systemlog;
+package com.ywt.valhalla.common.utils.systemlog;
 
 
 import java.lang.annotation.*;

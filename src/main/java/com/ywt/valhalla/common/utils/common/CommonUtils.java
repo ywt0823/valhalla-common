@@ -1,4 +1,4 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.common;
+package com.ywt.valhalla.common.utils.common;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * CommonUtils
  *
- * @author sunweihong
+ * @author yangwentao
  * @desc 公共工具类
  * @date 2020/10/14 17:13
  **/

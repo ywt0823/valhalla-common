@@ -1,4 +1,4 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.systemlog;
+package com.ywt.valhalla.common.utils.systemlog;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.zichan360.bigdata.dataportalcommons.common.utils.httpclient;
+package com.ywt.valhalla.common.utils.httpclient;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.ContentType;
