@@ -3,6 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <parent>
         <groupId>com.valhalla</groupId>
         <artifactId>valhalla-parent</artifactId>
@@ -58,24 +70,24 @@
     </dependencies>
 
 
-    <!-- 发布选项: id必须与setting.xml文件中server的id相同 -->
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <url>http://192.168.1.105:8081/repository/maven-releases/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>http://192.168.1.105:8081/repository/maven-snapshots/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
-    <!-- 指定仓库-->
-    <repositories>
-        <repository>
-            <id>public</id>
-            <url>http://192.168.1.105:8081/repository/maven-public/</url>
-        </repository>
-    </repositories>
+<!--    &lt;!&ndash; 发布选项: id必须与setting.xml文件中server的id相同 &ndash;&gt;-->
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>releases</id>-->
+<!--            <url>http://192.168.1.105:8081/repository/maven-releases/</url>-->
+<!--            <uniqueVersion>true</uniqueVersion>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>snapshots</id>-->
+<!--            <url>http://192.168.1.105:8081/repository/maven-snapshots/</url>-->
+<!--            <uniqueVersion>true</uniqueVersion>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
+<!--    &lt;!&ndash; 指定仓库&ndash;&gt;-->
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>public</id>-->
+<!--            <url>http://192.168.1.105:8081/repository/maven-public/</url>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 </project>

@@ -1,4 +1,4 @@
-package com.ywt.valhalla.common.utils.httpclient;
+package com.valhalla.common.utils.httpclient;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.ContentType;
@@ -24,4 +24,5 @@ public interface HttpResult {
      * @return
      */
     CloseableHttpResponse apply(URL apiUrl, Object body, ContentType contentType) throws IOException;
+
 }

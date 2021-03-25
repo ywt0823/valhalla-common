@@ -1,4 +1,4 @@
-package com.ywt.valhalla.common.utils.encryption;
+package com.valhalla.common.utils.encryption;
 
 /**
  * @description: 加解密抽象类

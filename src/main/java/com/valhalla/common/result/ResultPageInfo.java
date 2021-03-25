@@ -1,4 +1,4 @@
-package com.ywt.valhalla.common.result;
+package com.valhalla.common.result;
 
 import java.io.Serializable;
 

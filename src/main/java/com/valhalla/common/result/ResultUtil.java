@@ -1,4 +1,4 @@
-package com.ywt.valhalla.common.result;
+package com.valhalla.common.result;
 
 import com.github.pagehelper.PageInfo;
 import com.sun.istack.NotNull;
@@ -23,7 +23,7 @@ public class ResultUtil {
     public static <T> Result<T> success(@NotNull final T t, final ResultPageInfo resultPageInfo) {
         Result<T> result = new Result<>();
         result.setStatus(ResultEnum.SUCCESS);
-        result.setStatus_code(200);
+        result.setStatusCode(200);
         result.setMsg("接口调用成功！");
         result.setData(t);
         result.setPageInfo(resultPageInfo);
@@ -33,7 +33,7 @@ public class ResultUtil {
     public static <T> Result<T> success(@NotNull final T t, @NotNull final String message, final ResultPageInfo resultPageInfo) {
         Result<T> result = new Result<>();
         result.setStatus(ResultEnum.SUCCESS);
-        result.setStatus_code(200);
+        result.setStatusCode(200);
         result.setMsg(message);
         result.setData(t);
         result.setPageInfo(resultPageInfo);
@@ -45,7 +45,7 @@ public class ResultUtil {
         result.setData(pageResult.getList());
         result.setMsg("接口调用成功");
         result.setStatus(ResultEnum.SUCCESS);
-        result.setStatus_code(200);
+        result.setStatusCode(200);
         ResultPageInfo resultPageInfo = new ResultPageInfo(String.valueOf(pageResult.getTotal()), String.valueOf(pageResult.getPageNum()), String.valueOf(pageResult.getPageSize()), String.valueOf(pageResult.getPages()));
         result.setPageInfo(resultPageInfo);
         return result;
@@ -71,7 +71,7 @@ public class ResultUtil {
         Result result = new Result();
         result.setStatus(status);
         //1000,程序默认错误
-        result.setStatus_code(1000);
+        result.setStatusCode(1000);
         result.setMsg(msg);
         result.setData(null);
         ResultPageInfo resultPageInfo = new ResultPageInfo("0", "0", "0", "0");
@@ -82,7 +82,7 @@ public class ResultUtil {
     public static Result error(@NotNull final ResultEnum status, @NotNull final Integer status_code, @NotNull final String msg) {
         Result result = new Result();
         result.setStatus(status);
-        result.setStatus_code(status_code);
+        result.setStatusCode(status_code);
         result.setMsg(msg);
         ResultPageInfo resultPageInfo = new ResultPageInfo("0", "0", "0", "0");
         result.setPageInfo(resultPageInfo);

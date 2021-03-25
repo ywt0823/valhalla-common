@@ -1,4 +1,4 @@
-package com.ywt.valhalla.common.utils.common;
+package com.valhalla.common.utils.common;
 
 
 import org.slf4j.Logger;

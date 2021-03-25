@@ -1,10 +1,10 @@
-package com.ywt.valhalla.common.utils.httpclient;
+package com.valhalla.common.utils.httpclient;
 
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sun.istack.NotNull;
-import com.ywt.valhalla.common.utils.common.LogWrapperUtil;
+import com.valhalla.common.utils.common.LogWrapperUtil;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
