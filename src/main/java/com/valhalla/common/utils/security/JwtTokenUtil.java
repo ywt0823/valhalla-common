@@ -11,10 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author admin
@@ -25,8 +23,8 @@ public class JwtTokenUtil {
     private static final Base64Utils base64Utils = new Base64Utils();
     private static final String privateKey = "valhalla";
 
-    public static String generateToken(Map<String, Object> claims, Long expirationSeconds) {
-        Date expirationDate = new Date(System.currentTimeMillis() + expirationSeconds * 3600L);
+    public static String generateToken(Map<String, Object> claims, Long expirationSeconds, TimeUnit timeUnit) {
+        Date expirationDate = new Date(System.currentTimeMillis() + timeUnit.toMillis(expirationSeconds));
         String originToken = Jwts.builder()
                 //负载
                 .setClaims(claims)
@@ -35,7 +33,7 @@ public class JwtTokenUtil {
                 //过期时间
                 .setExpiration(expirationDate)
                 //加密方式
-                .signWith(SignatureAlgorithm.HS512,privateKey)
+                .signWith(SignatureAlgorithm.HS512, privateKey)
                 //生成
                 .compact();
         return base64Utils.encrypt(originToken);
